@@ -41,7 +41,7 @@
         <span class="brown-title">vote_average:</span>
         {{ movie.vote_average }}
       </div>
-      <div class="discription__item">
+      <div v-if="movie.tagline" class="discription__item">
         <span class="brown-title"> tagline:</span>
         {{ movie.tagline }}
       </div>
@@ -74,13 +74,8 @@ export default {
       )
       const result = await data
       this.movie = result.data
+      this.movie.genres.forEach((g) => this.genres.push(g.name))
     },
-  },
-  mounted() {
-    console.log(this.movie)
-    for (let i = 0; i < this.movie.genres.length; i++) {
-      this.genres.push(this.movie.genres[i].name)
-    }
   },
 }
 </script>

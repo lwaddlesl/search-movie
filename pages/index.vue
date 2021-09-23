@@ -25,7 +25,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      URL: 'https://api.themoviedb.org/3/movie/now_playing?api_key=f1dfea0ae51d06d0af3e583914087e6c&language=en-US&page=1',
+      URL: `https://api.themoviedb.org/3/movie/now_playing?api_key=f1dfea0ae51d06d0af3e583914087e6c&language=en-US&page=1`,
       movies: [],
       search: '',
       searchedMovies: [],
