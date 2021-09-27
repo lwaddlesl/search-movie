@@ -12,11 +12,17 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  props: {
-    movies: Array,
-    searchedMovies: Array,
-    search: String,
+  async fetch() {
+    await this.getMovies()
+  },
+  computed: {
+    ...mapState(['movies', 'search', 'searchedMovies']),
+  },
+  methods: {
+    ...mapActions(['getMovies']),
   },
 }
 </script>

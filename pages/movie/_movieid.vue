@@ -52,7 +52,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'aboutMovie',
+  name: 'AboutMovie',
   data() {
     return {
       movie: '',
@@ -114,7 +114,7 @@ export default {
     margin-top: 50px;
     padding-left: 40px;
     width: 700px;
-    height: 450px;
+    min-height: 450px;
     .discription__item {
       color: rgb(207, 207, 207);
       margin-top: 10px;

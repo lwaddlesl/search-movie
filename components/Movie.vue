@@ -1,5 +1,5 @@
 <template>
-  <div class="movie">
+  <div v-if="movie.poster_path" class="movie">
     <nuxt-link
       class="movie-link"
       :to="{ name: 'movie-movieid', params: { movieid: movie.id } }"
@@ -20,7 +20,10 @@
 <script>
 export default {
   props: {
-    movie: Object,
+    movie: {
+      type: Object,
+      required: true,
+    },
   },
 }
 </script>
