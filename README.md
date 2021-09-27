@@ -1,5 +1,7 @@
-# movieApp
+# Search movie app
+This is a Movie Search App created using  [NuxtJS](https://nuxtjs.org/), [vuex](https://vuex.vuejs.org/).
 
+It uses open [The Movie Database (TMDb) API] (https://www.themoviedb.org/documentation/api) to display movie data.
 ## Build Setup
 
 ```bash
