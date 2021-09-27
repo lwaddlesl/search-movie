@@ -1,13 +1,16 @@
 <template>
-  <div v-if="!search" class="movie-list">
+  <div v-if="!search && !$store.state.isMoviesLoading" class="movie-list">
     <Movie v-for="(movie, index) in movies" :key="index" :movie="movie" />
   </div>
-  <div v-else-if="search" class="movie-list">
+  <div v-else-if="search && !$store.state.isMoviesLoading" class="movie-list">
     <Movie
       v-for="(movie, index) in searchedMovies"
       :key="index"
       :movie="movie"
     />
+  </div>
+  <div v-else-if="$store.state.isMoviesLoading" class="movie-list">
+    <h1>is Loading</h1>
   </div>
 </template>
 

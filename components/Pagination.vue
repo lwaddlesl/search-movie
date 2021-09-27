@@ -7,7 +7,13 @@
       {{ $store.state.curPage }}
     </div>
     <div class="pagination__item">
-      <button class="next-btn" @click="next">next</button>
+      <button
+        v-if="$store.state.curPage < $store.state.maxPages"
+        class="next-btn"
+        @click="next"
+      >
+        next
+      </button>
     </div>
   </div>
 </template>

@@ -20,11 +20,11 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['searchMovies']),
+    ...mapActions(['searchMovies', 'getMovies']),
     ...mapMutations({ c: 'clear' }),
     clear() {
       this.c()
-      this.searchMovies()
+      this.getMovies()
     },
     getSearch(e) {
       this.$store.commit('getSearch', e.target.value)
