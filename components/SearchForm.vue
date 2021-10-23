@@ -24,11 +24,14 @@ export default {
     ...mapMutations({ c: 'clear' }),
     clear() {
       this.c()
-      this.getMovies()
+      this.$router.push({ path: '/' })
     },
     getSearch(e) {
       this.$store.commit('getSearch', e.target.value)
       this.searchMovies()
+      this.$router.push({
+        query: { q: e.target.value },
+      })
     },
   },
 }

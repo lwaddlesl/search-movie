@@ -1,10 +1,10 @@
 <template>
-  <div class="pagination">
+  <div v-if="!$store.state.isMoviesLoading" class="pagination">
     <div class="pagination__item">
       <button v-if="$store.state.curPage > 1" @click="prev">prev</button>
     </div>
-    <div class="pagination__item">
-      {{ $store.state.curPage }}
+    <div v-if="$store.state.maxPages > 1" class="pagination__item">
+      {{ $store.state.curPage }}/{{ $store.state.maxPages }}
     </div>
     <div class="pagination__item">
       <button
@@ -26,10 +26,18 @@ export default {
     ...mapMutations({ n: 'next', p: 'prev' }),
     next() {
       this.n()
+      this.$router.push({
+        path: this.$route.fullPath,
+        query: { page: this.$store.state.curPage },
+      })
       this.getMovies()
     },
     prev() {
       this.p()
+      this.$router.push({
+        path: this.$route.fullPath,
+        query: { page: this.$store.state.curPage },
+      })
       this.getMovies()
     },
   },

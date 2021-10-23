@@ -8,9 +8,15 @@
       :key="index"
       :movie="movie"
     />
+    <div
+      v-if="$store.state.maxPages == 0"
+      style="margin-top: 20px; font-size: 46px"
+    >
+      Empty
+    </div>
   </div>
-  <div v-else-if="$store.state.isMoviesLoading" class="movie-list">
-    <h1>is Loading</h1>
+  <div v-else-if="$store.state.isMoviesLoading">
+    <Loading />
   </div>
 </template>
 
@@ -24,6 +30,14 @@ export default {
   computed: {
     ...mapState(['movies', 'search', 'searchedMovies']),
   },
+
+  mounted() {
+    if (this.$route.query.page) {
+      this.$store.commit('setPage', this.$route.query.page)
+    }
+    this.getMovies()
+  },
+
   methods: {
     ...mapActions(['getMovies']),
   },

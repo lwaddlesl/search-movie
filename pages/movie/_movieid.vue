@@ -1,66 +1,74 @@
 <template>
-  <div class="about-movie">
-    <div class="left">
-      <nuxt-link :to="{ name: 'index' }">
-        <div class="back">Back</div>
-      </nuxt-link>
+  <div class="container">
+    <div class="about-movie">
+      <div class="left">
+        <nuxt-link :to="{ name: 'index' }">
+          <div class="back">Back</div>
+        </nuxt-link>
 
-      <div class="img">
-        <img
-          :src="`https://image.tmdb.org/t/p/w300/${movie.poster_path}`"
-          :alt="movie.title"
-        />
+        <div class="img">
+          <img
+            :src="`https://image.tmdb.org/t/p/w300/${movie.poster_path}`"
+            :alt="movie.title"
+          />
+        </div>
+      </div>
+      <div class="discription">
+        <h1 class="title">
+          {{ movie.title }}
+        </h1>
+        <h2>About movie</h2>
+        <div class="discription__item">
+          <span class="brown-title">Genres:</span>
+          <p v-for="(g, index) in genres" :key="index" class="genres">
+            {{ g + ' ' }}
+          </p>
+        </div>
+        <div class="discription__item">
+          <span class="brown-title">Overview:</span>
+          {{ movie.overview }}
+        </div>
+        <div v-if="movie.homepage" class="discription__item">
+          <span class="brown-title">Homepage:</span>
+          <a class="homepage" :href="movie.homepage">
+            {{ movie.homepage }}
+          </a>
+        </div>
+        <div class="discription__item">
+          <span class="brown-title">release date:</span>
+          {{ movie.release_date }}
+        </div>
+        <div class="discription__item">
+          <span class="brown-title">vote average:</span>
+          {{ movie.vote_average }}
+        </div>
+        <div v-if="movie.tagline" class="discription__item">
+          <span class="brown-title"> tagline:</span>
+          {{ movie.tagline }}
+        </div>
       </div>
     </div>
-    <div class="discription">
-      <h1 class="title">
-        {{ movie.title }}
-      </h1>
-      <h2>About movie</h2>
-      <div class="discription__item">
-        <span class="brown-title">Genres:</span>
-        <p v-for="(g, index) in genres" :key="index" class="genres">
-          {{ g + ' ' }}
-        </p>
-      </div>
-      <div class="discription__item">
-        <span class="brown-title">Overview:</span>
-        {{ movie.overview }}
-      </div>
-      <div v-if="movie.homepage" class="discription__item">
-        <span class="brown-title">Homepage:</span>
-        <a class="homepage" :href="movie.homepage">
-          {{ movie.homepage }}
-        </a>
-      </div>
-      <div class="discription__item">
-        <span class="brown-title">release date:</span>
-        {{ movie.release_date }}
-      </div>
-      <div class="discription__item">
-        <span class="brown-title">vote_average:</span>
-        {{ movie.vote_average }}
-      </div>
-      <div v-if="movie.tagline" class="discription__item">
-        <span class="brown-title"> tagline:</span>
-        {{ movie.tagline }}
-      </div>
+    <div class="sm-title">
+      <h2>Similar movies:</h2>
     </div>
+    <Carrusel :movies="similarMovies" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
-  name: 'AboutMovie',
+  layout: 'empty',
   data() {
     return {
       movie: '',
       genres: [],
+      similarMovies: [],
     }
   },
   async fetch() {
     await this.getSingleMovie()
+    await this.getSimilarMovie()
   },
   head() {
     return {
@@ -69,18 +77,30 @@ export default {
   },
   methods: {
     async getSingleMovie() {
-      const data = axios.get(
+      const response = await axios.get(
         `https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=f1dfea0ae51d06d0af3e583914087e6c&language=en-US`
       )
-      const result = await data
-      this.movie = result.data
+      this.movie = response.data
       this.movie.genres.forEach((g) => this.genres.push(g.name))
+    },
+    async getSimilarMovie() {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/similar?api_key=f1dfea0ae51d06d0af3e583914087e6c&language=en-US`
+      )
+      this.similarMovies = response.data.results
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.container {
+  margin: 0 200px;
+}
+.sm-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
 .about-movie {
   display: flex;
   padding: 20px;

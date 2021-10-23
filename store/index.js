@@ -47,8 +47,6 @@ export const actions = {
             commit('getSearch', state.search)
             commit('searchClear')
             commit('setLoading', true);
-
-
             const response = await axios.get(
                 `${state.URL}/search/movie/?api_key=${state.APIKEY}&language=en-US&page=${state.curPage}&query=${state.search}`
             )
@@ -98,6 +96,7 @@ export const mutations = {
     },
     updateFilter(state, selectFilter) {
         state.selectFilter = selectFilter
+        state.curPage = 1
     },
 
     filter(state) {
